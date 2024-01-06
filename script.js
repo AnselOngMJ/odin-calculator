@@ -14,6 +14,23 @@ function divide(x, y) {
   return x / y;
 }
 
+window.addEventListener('keydown', (key) => {
+  switch (key.key) {
+    case 'Backspace':
+      document.querySelector('#backspace').click();
+      break;
+    case 'Delete':
+      document.querySelector('#clear').click();
+      break;
+    default:
+      document.querySelectorAll('*').forEach((element) => {
+        if (element.textContent === key.key) {
+          element.click();
+        }
+      });
+  }
+});
+
 let x = '';
 let y = '';
 let operator = '';
@@ -96,4 +113,4 @@ document.querySelector('#backspace').addEventListener('click', () => {
     y = y.slice(0, y.length - 1);
     display(y);
   }
-})
+});
