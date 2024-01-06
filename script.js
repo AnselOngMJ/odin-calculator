@@ -29,8 +29,9 @@ function operate(operator, x, y) {
     case '/':
       if (!y) {
         return 'Undefined';
+      } else {
+        return divide(x, y);
       }
-      return divide(x, y);
     default:
       return 'Invalid Operator';
   }
@@ -46,7 +47,15 @@ digits.forEach(button => {
     if (operator === '=') {
       x = '';
     }
-    y = y.replace(/^0/, '');
+    if (!y.includes('.')) {
+      y = y.replace(/^0/, '');
+    }
+    if (button.textContent === '.') {
+      if (!y) {
+        y += '0';
+      }
+      button.disabled = true;
+    }
     y += button.textContent;
     display(y);
   });
@@ -58,11 +67,12 @@ operators.forEach(button => {
     if (y) {
       if (x && operator) {
         x = operate(operator, parseFloat(x), parseFloat(y));
-        display(Math.round(x * 100) / 100);
+        display(Math.round(x * 10000) / 10000);
       } else {
         x = y;
       }
       y = '';
+      document.querySelector('#point').disabled = false;
     }
     operator = button.textContent;
   });
@@ -72,5 +82,6 @@ document.querySelector('#clear').addEventListener('click', () => {
   x = '';
   y = '';
   operator = '';
+  document.querySelector('#point').disabled = false;
   display('0');
 });
