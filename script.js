@@ -41,6 +41,8 @@ function display(number) {
   document.querySelector('#display').textContent = number;
 }
 
+const point = document.querySelector('#point');
+
 const digits = document.querySelectorAll('.digits');
 digits.forEach(button => {
   button.addEventListener('click', () => {
@@ -54,7 +56,7 @@ digits.forEach(button => {
       if (!y) {
         y += '0';
       }
-      button.disabled = true;
+      point.disabled = true;
     }
     y += button.textContent;
     display(y);
@@ -72,7 +74,7 @@ operators.forEach(button => {
         x = y;
       }
       y = '';
-      document.querySelector('#point').disabled = false;
+      point.disabled = false;
     }
     operator = button.textContent;
   });
@@ -82,6 +84,16 @@ document.querySelector('#clear').addEventListener('click', () => {
   x = '';
   y = '';
   operator = '';
-  document.querySelector('#point').disabled = false;
+  point.disabled = false;
   display('0');
 });
+
+document.querySelector('#backspace').addEventListener('click', () => {
+  if (y) {
+    if (y.charAt(y.length - 1) === '.') {
+      point.disabled = false;
+    }
+    y = y.slice(0, y.length - 1);
+    display(y);
+  }
+})
