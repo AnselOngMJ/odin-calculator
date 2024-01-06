@@ -15,19 +15,9 @@ function divide(x, y) {
 }
 
 window.addEventListener('keydown', (key) => {
-  switch (key.key) {
-    case 'Backspace':
-      document.querySelector('#backspace').click();
-      break;
-    case 'Delete':
-      document.querySelector('#clear').click();
-      break;
-    default:
-      document.querySelectorAll('*').forEach((element) => {
-        if (element.textContent === key.key) {
-          element.click();
-        }
-      });
+  const element = document.querySelector(`button[data-key="${key.key}"]`);
+  if (element) {
+    element.click();
   }
 });
 
@@ -106,11 +96,14 @@ document.querySelector('#clear').addEventListener('click', () => {
 });
 
 document.querySelector('#backspace').addEventListener('click', () => {
-  if (y) {
+  if (y.length === 1) {
+    y = '';
+    display('0');
+  } else if (y) {
     if (y.charAt(y.length - 1) === '.') {
       point.disabled = false;
     }
     y = y.slice(0, y.length - 1);
     display(y);
-  }
+  } 
 });
